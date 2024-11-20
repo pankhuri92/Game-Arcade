@@ -66,7 +66,7 @@ class HarryPotterSudoku:
 
     def create_ui(self):
         # Load and display background image
-        bg_image = Image.open("/Users/lucky./Game-Arcade/sudoku/hogwarts_background.jpg")
+        bg_image = Image.open("sudoku/hogwarts_background.jpg")
         bg_image = bg_image.resize((600, 700), Image.Resampling.LANCZOS)
         bg_photo = ImageTk.PhotoImage(bg_image)
         self.bg_label = tk.Label(self.root, image=bg_photo)

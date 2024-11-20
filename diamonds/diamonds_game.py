@@ -23,14 +23,14 @@ BLACK = (0, 0, 0)
 # Load card images
 card_images = {}
 for i in range(2, 15):
-    card_path = f"images/{i}_of_diamonds.png"  # Adjust the path as needed
+    card_path = f"diamonds/images/{i}_of_diamonds.png"  # Adjust the path as needed
     card_images[i] = pygame.transform.scale(pygame.image.load(card_path), (72, 96))  # Adjust size as needed
 
 # Load card images for player's hand (other than diamonds)
 player_hand_images = {}
 suit = random.choice(["hearts","clubs","spades"])
 for i in range(2, 15):
-    card_path = f"images/{i}_of_{suit}.png"  # Adjust the path as needed
+    card_path = f"diamonds/images/{i}_of_{suit}.png"  # Adjust the path as needed
     player_hand_images[i] = pygame.transform.scale(pygame.image.load(card_path), (72, 96))  # Adjust size as needed
 
 # Fonts

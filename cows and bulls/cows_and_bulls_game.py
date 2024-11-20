@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import random
+from collections import Counter
 
 def load_words(file_path):
     """Load and return a list of 4-letter words from the provided file."""
@@ -14,6 +15,18 @@ def filter_words(words, guess, cows, bulls):
         return match == bulls and (common - match) == cows
 
     return [word for word in words if match_cows_bulls(word)]
+
+def frequency_based_guess(words):
+    """Choose the word that maximizes the frequency of common letters."""
+    # Count the frequency of each letter in all remaining words
+    letter_frequency = Counter(char for word in words for char in word)
+   
+    # Score each word by summing the frequencies of its letters
+    def word_score(word):
+        return sum(letter_frequency[char] for char in set(word))
+   
+    # Return the word with the highest score
+    return max(words, key=word_score)
 
 class CowsAndBullsGame:
     def __init__(self, master, file_path):
@@ -87,11 +100,13 @@ class CowsAndBullsGame:
         self.new_game()
 
     def make_guess(self):
-        """Make a guess and display it."""
+        """Make a strategic guess and display it."""
         if self.best_starts:
             self.current_guess = self.best_starts.pop(0)
+        elif self.words:
+            self.current_guess = frequency_based_guess(self.words)
         else:
-            self.current_guess = random.choice(self.words) if self.words else None
+            self.current_guess = None
 
         if self.current_guess:
             self.guess_label.config(text=f"My guess: {self.current_guess}")
@@ -124,8 +139,8 @@ class CowsAndBullsGame:
 
     def new_game(self):
         """Reset the game."""
-        self.words = load_words("four_letter_words.txt")
-        self.best_starts = ['acre', 'pain', 'riot', 'mile', 'quit']
+        self.words = load_words("cows and bulls/four_letter_words.txt")
+        self.best_starts = ['acre']
         self.current_guess = None
         self.attempts = 0
         self.result_label.config(text="")
@@ -136,5 +151,5 @@ class CowsAndBullsGame:
 # Create the GUI application
 if __name__ == "__main__":
     root = tk.Tk()
-    app = CowsAndBullsGame(root, "four_letter_words.txt")
+    app = CowsAndBullsGame(root, "cows and bulls/four_letter_words.txt")
     root.mainloop()
